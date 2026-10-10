@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sky-yedgaon" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="60%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <linearGradient id="water-yedgaon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="50%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+    <linearGradient id="dam-wall-yedgaon" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="40%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="downstream-yedgaon" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow-yedgaon" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="600" height="320" fill="url(#sky-yedgaon)"/>
+
+  <!-- Sahyadri Foothills (Kukadi Basin / Junnar) -->
+  <path d="M0,175 Q75,130 155,155 T315,140 T475,150 T600,135 L600,320 L0,320 Z" fill="#94a3b8" opacity="0.35"/>
+  <path d="M0,190 Q95,150 205,170 T425,155 T600,165 L600,320 L0,320 Z" fill="#64748b" opacity="0.25"/>
+
+  <!-- Upstream Reservoir Water -->
+  <path d="M0,195 Q140,190 270,192 L270,295 L0,295 Z" fill="url(#water-yedgaon)"/>
+  <path d="M20,210 Q90,207 180,210" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="12,6" fill="none" opacity="0.6"/>
+  <path d="M40,228 Q120,225 220,228" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="16,8" fill="none" opacity="0.5"/>
+  <path d="M10,248 Q100,245 240,248" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="20,10" fill="none" opacity="0.4"/>
+
+  <!-- Dam Structure: Long Earthfill Embankment & Central Spillway -->
+  <polygon points="255,295 272,175 328,175 405,295" fill="url(#dam-wall-yedgaon)" filter="url(#shadow-yedgaon)"/>
+  <rect x="268" y="171" width="64" height="8" rx="2" fill="#334155"/>
+  <rect x="315" y="179" width="9" height="20" fill="#1e293b"/>
+  <rect x="331" y="179" width="9" height="20" fill="#1e293b"/>
+  <rect x="347" y="179" width="9" height="20" fill="#1e293b"/>
+  <path d="M324,191 Q328,195 331,191" stroke="#ef4444" stroke-width="2" fill="none"/>
+  <path d="M340,191 Q344,195 347,191" stroke="#ef4444" stroke-width="2" fill="none"/>
+  <line x1="328" y1="175" x2="405" y2="295" stroke="#1e293b" stroke-width="2"/>
+  <line x1="338" y1="210" x2="370" y2="210" stroke="#475569" stroke-width="1"/>
+  <line x1="352" y1="240" x2="385" y2="240" stroke="#475569" stroke-width="1"/>
+  <line x1="368" y1="270" x2="400" y2="270" stroke="#475569" stroke-width="1"/>
+
+  <!-- Downstream River Flow -->
+  <path d="M385,290 Q440,285 600,288 L600,320 L360,320 Z" fill="url(#downstream-yedgaon)"/>
+  <path d="M400,296 Q480,292 600,296" stroke="#ffffff" stroke-width="2" stroke-dasharray="24,12" fill="none" opacity="0.7"/>
+
+  <!-- Ground Banks -->
+  <path d="M0,290 L250,290 L240,320 L0,320 Z" fill="#334155"/>
+  <path d="M405,295 L600,295 L600,320 L395,320 Z" fill="#1e293b"/>
+
+  <!-- Glass Info Badge -->
+  <rect x="16" y="16" width="320" height="68" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1"/>
+  <rect x="28" y="26" width="5" height="48" rx="2" fill="#FF9933"/>
+  <rect x="28" y="42" width="5" height="16" fill="#FFFFFF"/>
+  <rect x="28" y="58" width="5" height="16" fill="#138808"/>
+  <text x="42" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Yedgaon Dam</text>
+  <text x="42" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="500" fill="#94a3b8">Kukadi • Pune, Maharashtra</text>
+  <text x="42" y="70" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600" fill="#38bdf8">Earthfill &amp; Masonry  |  Ht: 29 m  |  Cap: 94 MCM</text>
+
+  <!-- Technical Spec Tag -->
+  <rect x="440" y="20" width="144" height="24" rx="4" fill="rgba(255, 255, 255, 0.9)" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="512" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#0f172a">WRD • MAHARASHTRA</text>
+</svg>

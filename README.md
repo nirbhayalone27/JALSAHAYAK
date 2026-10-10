@@ -1,158 +1,144 @@
 # JalSahayak
 
-> Simulate the surge. Challenge the scenario. Map the impact. Support the decision.
+> Monitor the dam. Detect the change. Estimate the impact. Alert the decision-maker.
 
-JalSahayak is a flood intelligence and decision-support platform designed for sudden water-release and dam-break scenarios.
+**JalSahayak** is a focused dam-monitoring and flood-intelligence platform. It continuously watches selected dams using satellite and environmental data, detects meaningful changes, estimates downstream flood impact for dam-break scenarios, and generates actionable alerts and reports.
 
 ---
-
-## Overview
-
-JalSahayak evaluates downstream hazards during sudden reservoir releases and dam-break events. The platform models dynamic floodwave propagation across terrain to identify exposed populations and infrastructure.
-
-Designed for emergency planners and response teams, JalSahayak prioritizes scenario stress-testing. Rather than relying on a single forecast, it helps authorities formulate defensive evacuation strategies before and during release emergencies.
 
 ## Problem
 
-Sudden dam releases and breach events trigger rapid flood surges that inundate downstream communities within hours. Conventional warning systems often depend on static inundation maps or single forecasts. These overlook operational uncertainties—such as varying breach rates, gate schedules, and channel roughness—creating dangerous blind spots during evacuations.
+Dams are critical infrastructure. A sudden breach or uncontrolled release can inundate downstream communities within hours. Today, monitoring relies on fragmented manual inspections, delayed satellite analysis, and disconnected flood models. There is no single platform that ties **continuous dam observation → change detection → flood-impact estimation → alerts → reports** into one operational loop.
 
 ## Solution
 
-JalSahayak applies a scenario-driven hydrodynamic workflow to address operational uncertainties. Instead of trusting a single outcome, it evaluates multiple plausible flood scenarios to identify robust downstream impacts:
+JalSahayak closes that loop:
 
 ```
-DATA → PREPROCESS → SIMULATE → CHALLENGE → VALIDATE → IMPACT → DECISION
+MONITOR DAM → GET OBSERVATION → COMPARE WITH HISTORY → DETECT CHANGE
+      → UPDATE STATUS → ALERT IF NEEDED → ESTIMATE FLOOD IMPACT
+            → IDENTIFY AFFECTED AREAS → GENERATE REPORT
 ```
 
-## Key Features
+Satellite imagery is one intelligence layer — not the entire product. Physics-based flood modelling is the simulation layer. AI assists interpretation but does not replace physics.
 
-The repository is currently at the foundation stage; implemented and planned components are separated below:
+## Core Features
 
-- **Repository Core** *(Implemented)*: Base architecture, workflow specifications, and pipeline definitions.
-- **Scenario Schema** *(In Development)*: Standard breach timing, peak discharge, and hydrograph parameters.
-- **Dynamic Inundation Engine** *(Planned)*: Downstream water depth, velocity, and arrival-time solver.
-- **Scenario Stress-Testing** *(Planned)*: Multi-run overlay isolating persistent inundation zones.
-- **GIS Exposure Layering** *(Planned)*: Spatial overlay with roads, settlements, and critical assets.
-- **Satellite Cross-Validation** *(Planned)*: Optical/SAR observation scenes to evaluate model extents.
+| Feature | Description |
+|---|---|
+| **Dam Monitoring** | Register dams, track coordinates, river, reservoir, downstream region. Periodically update observations. |
+| **Satellite Change Detection** | Fetch available satellite observations; compare date-wise; detect water-spread, reservoir-boundary, and surface changes. |
+| **Dam Health Status** | Simple four-level status: `NORMAL` · `WATCH` · `ALERT` · `CRITICAL` — always with evidence and reasons. |
+| **Flood / Dam-Break Scenario** | Configure breach parameters; estimate flood extent, depth, flow direction, arrival time, affected areas. |
+| **Downstream Impact Analysis** | Identify potentially affected villages, roads, bridges, agriculture, critical infrastructure. |
+| **Alerts** | Evidence-based alerts with severity, time, dam, reason, and recommended next action. No spam. |
+| **Automatic Reports** | Continuously updated monitoring reports per dam — changes, status, impact, alerts, evidence. |
 
-## What Makes JalSahayak Different?
+## Product Workflow
 
-> *"Don't trust one flood scenario. Challenge it."*
-
-Most flood platforms rely on a single simulation run that may fail under unpredictable field conditions. JalSahayak challenges this by simulating an ensemble of plausible operational releases and breach regimes. Comparing these runs reveals persistent impact zones flooded across all variations versus sensitive zones tied to specific assumptions. This enables decision-makers to act on robust flood intelligence rather than fragile single forecasts.
-
-## System Workflow
-
-```text
-Input Data (DEM, River Geometry, Hydrographs)
-                     ↓
-               Preprocessing
-                     ↓
-           Scenario Configuration
-                     ↓
-          Hydrodynamic Simulation
-                     ↓
-             Inundation Mapping
-                     ↓
-            Scenario Comparison
-                     ↓
-        Validation (Observations)
-                     ↓
-                Impact Analysis
-                     ↓
-               Decision Support
 ```
+LOGIN → MY DAMS → SELECT DAM → DAM OVERVIEW → LATEST STATUS
+  → SATELLITE TIMELINE → CHANGE DETECTION → FLOOD ANALYSIS
+    → IMPACT AREA → ALERTS → AUTO-GENERATED REPORT
+```
+
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────────┐
+│                   Dashboard                      │
+└──────────────────────┬──────────────────────────┘
+                       │
+                  REST API
+                       │
+       ┌───────────────┼───────────────┐
+       │               │               │
+  Dam Service    Monitoring Svc   Satellite Svc
+       │               │               │
+       └───────┬───────┘               │
+               │                       │
+        Change Detection ◄─────────────┘
+               │
+          Risk Engine
+               │
+     Flood Scenario Engine
+               │
+         Impact Engine
+               │
+     ┌─────────┴─────────┐
+  Alert Engine      Report Engine
+```
+
+Modular monolith — services are logically separated, deployed as a single application for MVP.
 
 ## Tech Stack
 
-Technologies planned and configured across platform layers:
+| Layer | Technology |
+|---|---|
+| Frontend | React + TypeScript |
+| Backend | Python + FastAPI |
+| Database | PostgreSQL + PostGIS |
+| Background Jobs | Redis + worker system |
+| Geospatial | GDAL / Rasterio / GeoPandas / Shapely |
+| Satellite | Copernicus / Sentinel (progressive integration) |
+| Storage | Object storage for imagery/results |
+| Simulation | Service abstraction (future SPH / Delft3D integration) |
 
-- **Frontend**: TypeScript, MapLibre / WebGL *(Planned)*
-- **Backend**: Python, FastAPI *(Planned)*
-- **Geospatial**: GDAL, Rasterio, GeoPandas *(In Development)*
-- **Modelling**: 2D Hydrodynamic Solvers *(Planned)*
-- **Database**: PostgreSQL / PostGIS *(Planned)*
-- **Infrastructure**: Docker *(Planned)*
+## MVP Status
 
-## Current Prototype
+**Phase: Documentation & Foundation**
 
-- **Working**: Architecture specifications, schema design, and pipeline structure.
-- **In Development**: Geospatial preprocessing scripts and scenario schema.
-- **Planned**: Hydrodynamic engine, GIS overlay, comparison tools, and dashboard UI.
+- [x] Product definition
+- [x] Architecture design
+- [x] API contracts
+- [ ] Database schema
+- [ ] Synthetic demo data
+- [ ] Backend services
+- [ ] Satellite pipeline abstraction
+- [ ] Flood scenario engine
+- [ ] Alert & report engines
+- [ ] Frontend implementation
 
 ## Roadmap
 
-1. **Prototype Setup**: Repository foundation, preprocessing scripts, and scenario schema *(Current)*.
-2. **Hydrodynamic Integration**: 2D shallow-water inundation engine binding.
-3. **Indian Basin Case Study**: Calibration against a real Indian river catchment.
-4. **Satellite Validation**: Historical event comparison using SAR and optical imagery.
-5. **Multi-Scenario Intelligence**: Automated scenario difference and robust-zone identification.
-6. **Impact Analysis**: Exposure assessment across infrastructure and population layers.
-7. **Production Deployment**: Cloud infrastructure and decision-support dashboard.
+See [`docs/ROADMAP.md`](docs/ROADMAP.md) for the full phased plan — from product definition (Phase 0) through institutional pilot (Phase 10).
 
-## Architecture
+## Documentation
 
-```text
-[ Dashboard / UI ] (Planned)
-          │
-          ▼
-   [ API Gateway ] (Planned)
-          │
-   ┌──────┴──────────────────────────┐
-   ▼                                 ▼
-[ Scenario Engine ]       [ GIS & Impact Module ]
-   │                                 ▲
-   ▼                                 │
-[ Hydrodynamic Simulation Core ] ────┘
-   │
-   ▼
-[ Results Store / Raster Cache ]
-```
+All project documentation lives in `docs/`:
 
-## Project Structure
+| Document | Purpose |
+|---|---|
+| `PRD.md` | Product requirements |
+| `TRD.md` | Technical requirements |
+| `ARCHITECTURE.md` | System architecture |
+| `API.md` | REST API contracts |
+| `AI_SYSTEMS.md` | AI usage boundaries |
+| `SECURITY.md` | Security design |
+| `SYNTHETIC_DATA.md` | Demo data strategy |
+| `ROADMAP.md` | Phased roadmap |
+| `PRODUCT_DECISIONS.md` | Decision log |
+| `CODING_STANDARDS.md` | Code conventions |
+| `DESIGN_RULES.md` | Future UI rules |
+| `AGENTS.md` | AI agent definitions |
+| `RULES.md` | Engineering rulebook |
+| `TASKS.md` | Implementation backlog |
+| `MEMORY.md` | Persistent project memory |
+| `DIRECTOR.md` | Project director |
+| `ZERO.md` | What we will NOT build |
 
-```text
-JALSAHAYAK/
-└── README.md
-```
+## Important Limitations
 
-*(Modular subdirectories for `preprocessing/`, `simulation/`, `api/`, and `web/` will be established as codebase modules are committed.)*
-
-## Data Sources
-
-The platform is designed to ingest:
-
-- **Digital Elevation Models**: Copernicus DEM / SRTM terrain *(Planned)*.
-- **Hydrological Records**: Gauge discharge hydrographs and release logs *(Planned)*.
-- **Infrastructure**: OpenStreetMap roads, bridges, and settlements *(Planned)*.
-- **Satellite Imagery**: Sentinel-1 SAR and Sentinel-2 optical scenes *(Planned)*.
-
-## Validation
-
-Validation focuses on empirical ground-truthing rather than theoretical assertions:
-- Comparing simulated inundation boundaries against historical SAR/optical satellite observations.
-- Sensitivity analysis across varying Manning's roughness, discharge hydrographs, and terrain elevations.
-- Transparent reporting of assumptions without fabricated accuracy metrics.
-
-## Limitations
-
-- **Not an Official Warning System**: JalSahayak is a scenario evaluation tool, not an official emergency alerting service.
-- **Input Sensitivity**: Model reliability depends on DEM accuracy, channel bathymetry, and hydrograph precision.
-- **Validation Constraints**: Satellite validation requires timely passes and can be constrained by cloud cover.
-- **Calibration Needs**: Deployment requires basin-specific hydraulic calibration.
+- **Not an official warning system.** JalSahayak is a monitoring and decision-support tool.
+- **Satellite imagery alone cannot detect structural dam failure.** Structural failure detection requires ground instrumentation.
+- **Flood simulation in MVP uses abstracted / synthetic data.** Real hydrodynamic solvers will be integrated progressively.
+- **Input sensitivity.** Model outputs depend on DEM accuracy, breach parameters, and terrain quality.
+- **No fake accuracy.** All confidence levels and limitations are reported transparently.
 
 ## License
 
-No license has currently been specified.
-
-## Links
-
-Project links and mirrors will be published here upon release.
+License to be specified.
 
 ---
 
-```
-SIMULATE → CHALLENGE → VALIDATE → FIND ROBUST IMPACT → ACT
-```
-
-*JalSahayak empowers emergency planners to challenge flood assumptions, discover robust downstream risks, and make defensible decisions during sudden water releases.*
+*JalSahayak — focused dam monitoring and flood intelligence for the people who need it.*

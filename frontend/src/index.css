@@ -1,0 +1,288 @@
+@import 'leaflet/dist/leaflet.css';
+
+:root,
+[data-theme="light"] {
+  --font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Government-grade Light Theme (Default) */
+  --bg-app: #f4f6f9;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-header: #ffffff;
+  --bg-input: #ffffff;
+  --bg-panel: #f8fafc;
+  
+  --border-color: #e2e8f0;
+  --border-subtle: #f1f5f9;
+
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+
+  /* Restrained Blue Action System */
+  --primary-blue: #0284c7;
+  --primary-hover: #0369a1;
+  --primary-light: #e0f2fe;
+  --primary-border: #bae6fd;
+
+  /* Metric Card Tints */
+  --tint-blue-bg: #eff6ff;
+  --tint-blue-icon: #0284c7;
+  --tint-red-bg: #fef2f2;
+  --tint-red-icon: #ef4444;
+  --tint-orange-bg: #fff7ed;
+  --tint-orange-icon: #f97316;
+  --tint-purple-bg: #faf5ff;
+  --tint-purple-icon: #9333ea;
+
+  /* Status Colors */
+  --status-normal-bg: #ecfdf5;
+  --status-normal-text: #059669;
+  --status-watch-bg: #fffbeb;
+  --status-watch-text: #d97706;
+  --status-high-bg: #fef2f2;
+  --status-high-text: #dc2626;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] {
+  --font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Cohesive Dark Theme */
+  --bg-app: #0b1120;
+  --bg-card: #0f172a;
+  --bg-sidebar: #0f172a;
+  --bg-header: #0f172a;
+  --bg-input: #1e293b;
+  --bg-panel: #1e293b;
+
+  --border-color: #1e293b;
+  --border-subtle: #334155;
+
+  --text-main: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+
+  /* Blue System in Dark Mode */
+  --primary-blue: #38bdf8;
+  --primary-hover: #0ea5e9;
+  --primary-light: rgba(56, 189, 248, 0.15);
+  --primary-border: rgba(56, 189, 248, 0.35);
+
+  /* Metric Card Tints */
+  --tint-blue-bg: rgba(2, 132, 199, 0.15);
+  --tint-blue-icon: #38bdf8;
+  --tint-red-bg: rgba(239, 68, 68, 0.15);
+  --tint-red-icon: #f87171;
+  --tint-orange-bg: rgba(249, 115, 22, 0.15);
+  --tint-orange-icon: #fb923c;
+  --tint-purple-bg: rgba(147, 51, 234, 0.15);
+  --tint-purple-icon: #c084fc;
+
+  /* Status Colors */
+  --status-normal-bg: rgba(16, 185, 129, 0.15);
+  --status-normal-text: #34d399;
+  --status-watch-bg: rgba(245, 158, 11, 0.15);
+  --status-watch-text: #fbbf24;
+  --status-high-bg: rgba(239, 68, 68, 0.15);
+  --status-high-text: #f87171;
+
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-panel);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-light);
+}
+
+/* Headings & Text Defaults */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+}
+
+/* Form Controls & Inputs */
+input, select, textarea {
+  color: var(--text-main);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  font-family: inherit;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--text-light);
+}
+select option {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-blue);
+  color: #ffffff;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 13.5px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 13px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.btn-secondary:hover {
+  background-color: var(--bg-panel);
+  border-color: var(--border-subtle);
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-normal, .badge-low {
+  background-color: var(--status-normal-bg);
+  color: var(--status-normal-text);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.badge-watch, .badge-medium {
+  background-color: var(--status-watch-bg);
+  color: var(--status-watch-text);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.badge-high, .badge-alert, .badge-critical {
+  background-color: var(--status-high-bg);
+  color: var(--status-high-text);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Cards */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+}
+table.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+table.custom-table th {
+  background-color: var(--bg-panel);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+table.custom-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+table.custom-table tr:hover td {
+  background-color: var(--bg-panel);
+}
+
+/* Leaflet Container & Clean Pin Overrides */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  font-family: inherit;
+  background-color: #cbd5e1;
+}
+
+/* Remove default Leaflet white box and borders on custom divIcons */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-card) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+.leaflet-bar a {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+.leaflet-bar a:hover {
+  background-color: var(--bg-panel) !important;
+}
